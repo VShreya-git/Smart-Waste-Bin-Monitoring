@@ -1,9 +1,10 @@
-# Smart Waste Bin Monitoring with QAM-Inspired Complex Representation for Scalar Sensor Data
+# Smart Waste Bin Monitoring 
 
-This project presents a novel QAM-inspired complex-domain analytical framework for interpreting scalar IoT sensor data from a Smart Waste Bin prototype.
-
-Traditional IoT systems process sensor data using thresholding, averaging, or basic time-domain techniques. These scalar-only approaches fail to capture the relationship between instantaneous sensor value and its temporal variation.
-Inspired by Quadrature Amplitude Modulation (QAM) in communication systems, this work maps scalar sensor readings into the complex plane, enabling hybrid signal-processing analysis combining magnitude and rate-of-change information.
+Rapid urbanization and population growth have led to a significant increase in daily waste generation, putting immense pressure on existing waste management systems. 
+Traditional waste bins rely heavily on manual monitoring and collection, which often results in delayed responses and inefficient resource utilization.
+Overflowing bins are a common issue in public spaces, leading to unhygienic conditions, foul odors, and potential environmental contamination. These conditions not only degrade the surroundings but also pose serious health risks.
+Additionally, conventional systems lack real-time monitoring capabilities, making it difficult to track bin status and optimize waste collection routes. This leads to unnecessary fuel consumption, increased operational costs, and poor management efficiency.
+Another critical limitation is the absence of safety monitoring. Harmful gases produced from decomposing waste often go undetected, posing risks to both the environment and human health.
 
 ## Requirements
 
@@ -14,10 +15,10 @@ Hardware:
 - Gas Sensor
 - Servo Motor
 - LCD Display
+- Keypad
 
 Software:
 - Arduino IDE
-- MATLAB (for analysis)
 
 ## System Architecture
 <img width="1863" height="644" alt="Screenshot 2026-02-25 195150" src="https://github.com/user-attachments/assets/fad57374-6150-47c6-9e07-b4fd64f50bbf" />
@@ -26,77 +27,17 @@ Software:
 
 The Smart Waste Bin operates through a continuous sensing–processing–response cycle controlled by the ESP32 microcontroller.
 
-#### Step 1: Continuous Sensing
+•	Ultrasonic sensing for fill-level measurement by calculating the distance between the waste and the lid
+•	IR-based sensor detects user proximity, enabling automatic lid opening without physical contact.
+•	Gas sensing is integrated to detect harmful gases generated from waste decomposition
+•	Servo motor is used to control the opening and closing of the lid based on sensor inputs.
+•	LCD display provides real-time status updates to users
+•	WiFi-enabled alert communication to the registered mobile number.
+•	A Keypad-based PIN authentication system is implemented to provide secure access when the bin is locked due to full capacity or toxic gas detection, preventing misuse and enabling controlled operation
 
-•	Ultrasonic Sensor (HC-SR04) continuously measures the distance between the sensor and the garbage surface using time-of-flight echo measurement.
+The system ensures hygienic operation, intelligent monitoring, and real-time response using an embedded hardware architecture.
 
-•	IR Sensor (LM393) monitors hand proximity for automatic lid operation.
 
-•	Gas Sensor detects harmful or toxic gas concentration inside the bin.
-
-•	All sensor readings are periodically acquired by the ESP32.
-
-#### Step 2: Local Processing (ESP32)
-
-The ESP32 performs real-time processing:
-
-•	Converts ultrasonic echo time into distance (fill level).
-
-•	Compares fill level with a predefined threshold.
-
-•	Reads IR sensor state for proximity detection.
-
-•	Monitors gas sensor value against safety limits.
-
-•	Generates PWM signals to control the servo motor.
-
-#### Step 3: Lid Automation
-
-When the IR sensor detects a hand:
-
-•	The ESP32 drives the servo motor.
-
-•	The lid opens automatically.
-
-•	After a fixed delay (e.g., 3 seconds): The lid closes automatically.
-
-This ensures touch-free operation.
-
-#### Step 4: Event Detection
-
-The system detects key operational events:
-
-•	Bin Full Condition:
-Triggered when measured distance falls below a defined threshold.
-
-•	Toxic Gas Alert:
-Triggered when gas sensor reading exceeds the safety limit.
-
-#### Step 5: Communication & Alerts
-
-When critical conditions occur:
-
-•	The ESP32 uses its in-built WiFi module.
-
-•	A Telegram notification is sent to the registered user.
-
-•	LCD display updates current bin status.
-
-#### Step 6: Data Logging & Analytical Processing
-
-Sensor data is stored and later processed in MATLAB using a QAM-inspired complex mapping:
-
-Zn = Xn  + j(Xn  - Xn-1 )
-
-This allows:
-
-•	Magnitude-based activity monitoring
-
-•	Phase-based dynamic behavior analysis
-
-•	Complex-plane trajectory visualization
-
-The analytical layer provides deeper insight into bin usage patterns beyond simple threshold detection.
 
 ## Conclusion
 This project demonstrates a Smart Waste Bin system that integrates real-time sensing, automated actuation, and wireless communication with a novel QAM-inspired complex-domain analytical framework.
